@@ -1,8 +1,8 @@
 # Deploy and Host
 
-[![Deploy to Railway](https://railway.app/button.svg)](https://railway.com/deploy/openbb)
+[![Deploy to Railway](https://railway.app/button.svg)](https://railway.com/deploy/WNcS43)
 
-![OpenBB Platform API](https://raw.githubusercontent.com/INAPP-Mobile/openbb/main/template-icon.svg)
+![OpenBB Platform API](https://files.catbox.moe/vw5iiv.svg)
 
 **OpenBB** is an open-source, data-agnostic investment research platform. This template deploys **OpenBB Platform API** — the HTTP server that exposes the entire OpenBB data platform as a REST API — so you get a self-hosted endpoint for market data (equities, crypto, FX, commodities, fixed income, economy, news) from 70+ data providers, queryable over HTTP and streamable to LLM agents via MCP.
 
