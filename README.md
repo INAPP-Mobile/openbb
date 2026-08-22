@@ -1,6 +1,6 @@
 # Deploy and Host
 
-[![Deploy to Railway](https://railway.app/button.svg)](https://railway.com/deploy/WNcS43)
+[![Deploy to Railway](https://railway.app/button.svg)](https://railway.com/deploy/Nvao3w)
 
 ![OpenBB Platform API](https://files.catbox.moe/vw5iiv.svg)
 
