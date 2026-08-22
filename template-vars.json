@@ -1,7 +1,7 @@
 {
   "PORT": {
     "name": "PORT",
-    "description": "Port the container listens on. Railpack injects it; the entrypoint maps it to the OpenBB server's OPENBB_API_PORT.",
+    "description": "Port the container listens on. Injected by Railway; the entrypoint maps it to the OpenBB server's OPENBB_API_PORT.",
     "isOptional": true,
     "defaultValue": "6900"
   },
@@ -13,34 +13,35 @@
   },
   "OPENBB_API_AUTH": {
     "name": "OPENBB_API_AUTH",
-    "description": "Enable HTTP Basic auth on the API endpoints (true/false). Leave false for open access on a private project.",
+    "description": "Enable HTTP Basic auth on the endpoints (true/false). Leave false for open access on a private project. The username/password below are auto-filled so you can deploy one-click and change them later.",
     "isOptional": true,
     "defaultValue": "false"
   },
   "OPENBB_API_USERNAME": {
     "name": "OPENBB_API_USERNAME",
-    "description": "Username for the optional HTTP Basic security gate (used only when OPENBB_API_AUTH=true).",
-    "isOptional": true
+    "description": "Username for the optional HTTP Basic gate (used only when OPENBB_API_AUTH=true). Has a sensible default so you can deploy one-click and change it later.",
+    "isOptional": true,
+    "defaultValue": "admin"
   },
   "OPENBB_API_PASSWORD": {
     "name": "OPENBB_API_PASSWORD",
-    "description": "Password for the optional HTTP Basic security gate (used only when OPENBB_API_AUTH=true). Auto-generated if you want to gate the API.",
+    "description": "Password for the optional HTTP Basic gate (used only when OPENBB_API_AUTH=true). A unique value is generated automatically on deploy. Change it any time from the Variables tab.",
     "isOptional": true,
     "defaultValue": "${{secret(16)}}"
   },
+  "FMP_API_KEY": {
+    "name": "FMP_API_KEY",
+    "description": "Financial Modeling Prep (FMP) API key — the premium equity/ETF/FX source. Paste your key to enable FMP calls; leave empty to use keyless providers (yfinance) and add it later from the Variables tab. Get one: https://site.financialmodelingprep.com/developer/docs. Placeholder, replace with a real key before using FMP.",
+    "isOptional": true
+  },
+  "INTRINIO_API_KEY": {
+    "name": "INTRINIO_API_KEY",
+    "description": "Intrinio API key — fundamental & market data. Paste your key to enable Intrinio calls; leave empty and add it later from the Variables tab. Placeholder, replace with a real key before using Intrinio.",
+    "isOptional": true
+  },
   "FRED_API_KEY": {
     "name": "FRED_API_KEY",
-    "description": "FRED (St. Louis Fed) API key for macro/market data. Leave blank to skip the provider.",
-    "isOptional": true
-  },
-  "POLYGON_API_KEY": {
-    "name": "POLYGON_API_KEY",
-    "description": "Polygon.io API key for equity/ETF/FX market data. Leave blank to skip the provider.",
-    "isOptional": true
-  },
-  "ALPHA_VANTAGE_KEY": {
-    "name": "ALPHA_VANTAGE_KEY",
-    "description": "Alpha Vantage API key. Leave blank to skip the provider.",
+    "description": "FRED (St. Louis Fed) API key — free macro/economic series (CPI, GDP series, rate curves). Paste your key to enable FRED calls; leave empty and add it later from the Variables tab. Free tier: https://fred.stlouisfed.org/docs/api/api_key.html. Placeholder, replace with a real key before using FRED.",
     "isOptional": true
   }
 }

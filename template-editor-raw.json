@@ -1,10 +1,10 @@
 {
   "PORT": { "value": "6900", "description": "Port the container listens on (mapped to OPENBB_API_PORT by the entrypoint)." },
   "TZ": { "value": "UTC", "description": "Container timezone (IANA name)." },
-  "OPENBB_API_AUTH": { "value": "false", "description": "Enable HTTP Basic auth on the API (true/false). false = open access." },
-  "OPENBB_API_USERNAME": { "value": "", "description": "Basic-auth username (only used when OPENBB_API_AUTH=true)." },
-  "OPENBB_API_PASSWORD": { "value": "${{secret(16)}}", "description": "Basic-auth password (only used when OPENBB_API_AUTH=true). Auto-generated." },
-  "FRED_API_KEY": { "value": "", "description": "FRED API key for macro/market data." },
-  "POLYGON_API_KEY": { "value": "", "description": "Polygon.io API key for equity/ETF/FX market data." },
-  "ALPHA_VANTAGE_KEY": { "value": "", "description": "Alpha Vantage API key." }
+  "OPENBB_API_AUTH": { "value": "false", "description": "Enable HTTP Basic auth on the endpoints (true/false). false = open access on a private project." },
+  "OPENBB_API_USERNAME": { "value": "admin", "description": "Basic-auth username (only used when OPENBB_API_AUTH=true). Auto-filled so you can deploy one-click and change it later." },
+  "OPENBB_API_PASSWORD": { "value": "${{secret(16)}}", "description": "Basic-auth password (only used when OPENBB_API_AUTH=true). Auto-generated on deploy; change it from the Variables tab." },
+  "FMP_API_KEY": { "value": "", "description": "Financial Modeling Prep (FMP) key — premium equity/ETF/FX. Replace placeholder before calling FMP; add or change later from the Variables tab." },
+  "INTRINIO_API_KEY": { "value": "", "description": "Intrinio key — fundamentals & market data. Replace placeholder before calling Intrinio; add or change later from the Variables tab." },
+  "FRED_API_KEY": { "value": "", "description": "FRED (St. Louis Fed, free) key — macro/economic series. Replace placeholder before calling FRED; add or change later from the Variables tab." }
 }

@@ -18,7 +18,7 @@ No database, no volume. The API is stateless; provider credentials are sourced f
 
 ## Why Deploy
 
-- **Self-hosted market data API** — 70+ providers (yfinance, FRED, Polygon, EIA, SEC, CFTC, …) on one endpoint
+- **Self-hosted market data API** — 70+ providers (yfinance, FMP, Intrinio, FRED, TMX, ecb, econdb, SEC, CFTC, …) on one endpoint
 - **Works out of the box** — free providers (yfinance) return real data with zero config
 - **Full OpenAPI/REST** — 278+ documented endpoints; `provider` is an explicit parameter, not a hidden default
 - **LLM-ready (MCP)** — ships `openbb-mcp`; expose the same endpoints as MCP tools for Claude/Cursor/Gemini agents
@@ -34,7 +34,7 @@ No database, no volume. The API is stateless; provider credentials are sourced f
 
 ## Dependencies for OpenBB
 
-No external accounts, databases, or client tools are required. Optional: one or more data-provider API keys (FRED, Polygon, Alpha Vantage, etc.) to enable premium sources. Free providers (yfinance) return data with no credentials.
+No external accounts, databases, or client tools are required to deploy. Optional: one or more data-provider API keys to enable premium sources. This build's main premium sources are **FMP** (`FMP_API_KEY`), **Intrinio** (`INTRINIO_API_KEY`), and **FRED** (`FRED_API_KEY`, free). Free providers (yfinance, SEC, CFTC, TMX) return data with no credentials.
 
 ### Deployment Dependencies
 
@@ -74,10 +74,12 @@ All variables are **optional**; the template works with zero config.
 | `PORT` | Listen port (injected by Railpack; mapped to `OPENBB_API_PORT` by the entrypoint) | `6900` |
 | `TZ` | Timezone (IANA) for logs/output | `UTC` |
 | `OPENBB_API_AUTH` | `true` → enable HTTP Basic auth on every endpoint | `false` |
-| `OPENBB_API_USERNAME` / `OPENBB_API_PASSWORD` | Basic-auth credentials (used only when `OPENBB_API_AUTH=true`) | _(empty)_ |
-| `POLYGON_API_KEY`, `FRED_API_KEY`, `ALPHA_VANTAGE_KEY`, … | Optional provider keys (any `*_API_KEY` / known credential name is picked up at boot) | _(empty)_ |
+| `OPENBB_API_USERNAME` / `OPENBB_API_PASSWORD` | Basic-auth credentials (used only when `OPENBB_API_AUTH=true`) | `admin` / auto-generated |
+| `FMP_API_KEY` | Financial Modeling Prep key — premium equity/FX (replace placeholder before calling FMP) | _empty_ |
+| `INTRINIO_API_KEY` | Intrinio key — fundamentals & market data (replace placeholder before calling Intrinio) | _empty_ |
+| `FRED_API_KEY` | FRED (free) — macro/economic series (replace placeholder before calling FRED) | _empty_ |
 
-`yfinance` is a genuine no-key provider (quotes, profiles, historical prices). Most others — FRED, Polygon, Alpha Vantage, Benzinga, CoinDesk, etc. — need an API key, and some (FRED) offer a free-tier key that you paste in as the variable above. Keys you don't have can stay empty; those providers simply won't return data.
+`yfinance` is a genuine no-key provider (quotes, profiles, historical prices). The paid ones this build exposes (FMP, Intrinio) and the free-key one (FRED) expect their key in the matching variable shown above. Providers whose key you don't set simply return a clear `400 Missing credential '<name>_api_key'` error (or an empty result) — the API itself keeps working, and every key can be added or changed any time from the Variables tab.
 
 ## Quick Start
 
@@ -85,7 +87,7 @@ All variables are **optional**; the template works with zero config.
 2. After the build + first deploy (~2–4 min), note the public URL shown on the service.
 3. Open `https://<your-url>/docs` to browse the 278+ endpoints in Swagger.
 4. Try this (free, no key): `https://<your-url>/api/v1/equity/price/quote?provider=yfinance&symbol=AAPL`.
-5. Optional: add provider API keys to the **Variables** tab to unlock premium sources; set `OPENBB_API_AUTH=true` to gate the API if you expose it publicly.
+5. Optional: add provider API keys (`FMP_API_KEY`, `INTRINIO_API_KEY`, `FRED_API_KEY`) to the **Variables** tab to unlock premium sources; set `OPENBB_API_AUTH=true` to gate the API if you expose it publicly.
 
 ## Troubleshooting
 
