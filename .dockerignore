@@ -1,0 +1,8 @@
+.git
+.github
+.env.example
+template-icon.svg
+template-vars.json
+template-editor-raw.json
+companion-mapping.json
+*.md

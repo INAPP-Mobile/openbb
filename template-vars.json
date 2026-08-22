@@ -1,0 +1,46 @@
+{
+  "PORT": {
+    "name": "PORT",
+    "description": "Port the container listens on. Railpack injects it; the entrypoint maps it to the OpenBB server's OPENBB_API_PORT.",
+    "isOptional": true,
+    "defaultValue": "6900"
+  },
+  "TZ": {
+    "name": "TZ",
+    "description": "Container timezone (IANA name), used for logs and generated output.",
+    "isOptional": true,
+    "defaultValue": "UTC"
+  },
+  "OPENBB_API_AUTH": {
+    "name": "OPENBB_API_AUTH",
+    "description": "Enable HTTP Basic auth on the API endpoints (true/false). Leave false for open access on a private project.",
+    "isOptional": true,
+    "defaultValue": "false"
+  },
+  "OPENBB_API_USERNAME": {
+    "name": "OPENBB_API_USERNAME",
+    "description": "Username for the optional HTTP Basic security gate (used only when OPENBB_API_AUTH=true).",
+    "isOptional": true
+  },
+  "OPENBB_API_PASSWORD": {
+    "name": "OPENBB_API_PASSWORD",
+    "description": "Password for the optional HTTP Basic security gate (used only when OPENBB_API_AUTH=true). Auto-generated if you want to gate the API.",
+    "isOptional": true,
+    "defaultValue": "${{secret(16)}}"
+  },
+  "FRED_API_KEY": {
+    "name": "FRED_API_KEY",
+    "description": "FRED (St. Louis Fed) API key for macro/market data. Leave blank to skip the provider.",
+    "isOptional": true
+  },
+  "POLYGON_API_KEY": {
+    "name": "POLYGON_API_KEY",
+    "description": "Polygon.io API key for equity/ETF/FX market data. Leave blank to skip the provider.",
+    "isOptional": true
+  },
+  "ALPHA_VANTAGE_KEY": {
+    "name": "ALPHA_VANTAGE_KEY",
+    "description": "Alpha Vantage API key. Leave blank to skip the provider.",
+    "isOptional": true
+  }
+}
