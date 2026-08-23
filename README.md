@@ -1,8 +1,8 @@
 # Deploy and Host
 
-[![Deploy to Railway](https://railway.app/button.svg)](https://railway.com/deploy/Nvao3w)
+[![Deploy to Railway](https://railway.app/button.svg)](https://railway.com/deploy/openbb)
 
-![OpenBB Platform API](https://files.catbox.moe/vw5iiv.svg)
+![OpenBB Platform API](https://raw.githubusercontent.com/INAPP-Mobile/openbb/main/template-icon.svg)
 
 **OpenBB** is an open-source, data-agnostic investment research platform. This template deploys **OpenBB Platform API** — the HTTP server that exposes the entire OpenBB data platform as a REST API — so you get a self-hosted endpoint for market data (equities, crypto, FX, commodities, fixed income, economy, news) from 70+ data providers, queryable over HTTP and streamable to LLM agents via MCP.
 
@@ -53,7 +53,7 @@ Railway builds the service from this repository's Dockerfile (one `openbb[all]` 
 | Market data (samples) | `/api/v1/equity/price/historical?provider=yfinance&symbol=AAPL&start_date=2025-01-01&end_date=2025-12-31` | Daily prices |
 | Market data (keys) | `/api/v1/economy/cpi?provider=fred` | CPI (needs a free FRED key) |
 
-> `provider` is a required query parameter on every endpoint (there is no implicit default) — if you omit it you get a 422. **`yfinance` needs no key**; most others (FRED, Polygon, Alpha Vantage, Benzinga, …) need an API key. See each endpoint's schema in `/openapi.json` for its full `provider_choices` list.
+> `provider` is a required query parameter on every endpoint (there is no implicit default) — if you omit it you get a 422. **`yfinance` needs no key**; most others (FMP, Intrinio, FRED, econdb, …) need an API key. See each endpoint's schema in `/openapi.json` for its full `provider_choices` list.
 
 ## MCP (optional)
 
@@ -71,29 +71,29 @@ All variables are **optional**; the template works with zero config.
 
 | Variable | Purpose | Default |
 |----------|---------|---------|
-| `PORT` | Listen port (injected by Railpack; mapped to `OPENBB_API_PORT` by the entrypoint) | `6900` |
+| `PORT` | Listen port (injected by Railway; mapped to `OPENBB_API_PORT` by the entrypoint) | `6900` |
 | `TZ` | Timezone (IANA) for logs/output | `UTC` |
 | `OPENBB_API_AUTH` | `true` → enable HTTP Basic auth on every endpoint | `false` |
 | `OPENBB_API_USERNAME` / `OPENBB_API_PASSWORD` | Basic-auth credentials (used only when `OPENBB_API_AUTH=true`) | `admin` / auto-generated |
-| `FMP_API_KEY` | Financial Modeling Prep key — premium equity/FX (replace placeholder before calling FMP) | _empty_ |
-| `INTRINIO_API_KEY` | Intrinio key — fundamentals & market data (replace placeholder before calling Intrinio) | _empty_ |
-| `FRED_API_KEY` | FRED (free) — macro/economic series (replace placeholder before calling FRED) | _empty_ |
+| `FMP_API_KEY` | Financial Modeling Prep key — premium equity/ETF/FX. Paste a key to enable FMP; add later from the Variables tab | _empty_ |
+| `INTRINIO_API_KEY` | Intrinio key — fundamentals & market data. Paste a key to enable Intrinio; add later from the Variables tab | _empty_ |
+| `FRED_API_KEY` | FRED (free) — macro/economic series. Paste a key to enable FRED; add later from the Variables tab | _empty_ |
 
-`yfinance` is a genuine no-key provider (quotes, profiles, historical prices). The paid ones this build exposes (FMP, Intrinio) and the free-key one (FRED) expect their key in the matching variable shown above. Providers whose key you don't set simply return a clear `400 Missing credential '<name>_api_key'` error (or an empty result) — the API itself keeps working, and every key can be added or changed any time from the Variables tab.
+`yfinance` is a genuine no-key provider (quotes, profiles, historical prices). The paid ones this build exposes (FMP, Intrinio) and the free-key one (FRED) expect their key in the matching variable shown above. Providers whose key you don't set simply return a clear `400 Missing credential` error naming the key to add (or an empty result) — the API itself keeps working, and every key can be added or changed any time from the Variables tab.
 
 ## Quick Start
 
 1. Click **Deploy to Railway** (button above).
 2. After the build + first deploy (~2–4 min), note the public URL shown on the service.
-3. Open `https://<your-url>/docs` to browse the 278+ endpoints in Swagger.
-4. Try this (free, no key): `https://<your-url>/api/v1/equity/price/quote?provider=yfinance&symbol=AAPL`.
+3. Browse 278+ endpoints in Swagger by opening your service's public URL with `/docs` appended.
+4. Try this for free (no key): your service's public URL + `/api/v1/equity/price/quote?provider=yfinance&symbol=AAPL`.
 5. Optional: add provider API keys (`FMP_API_KEY`, `INTRINIO_API_KEY`, `FRED_API_KEY`) to the **Variables** tab to unlock premium sources; set `OPENBB_API_AUTH=true` to gate the API if you expose it publicly.
 
 ## Troubleshooting
 
 - **502 on first hit** — the OpenBB platform takes ~30–60s to load ~70 provider plugins at cold start. `railway.json` sets `healthcheckTimeout=300` and start-period=90s on the Dockerfile `HEALTHCHECK`; the deploy form uses these. Retry once if the first probe times out.
 - **`{detail: {loc: query, provider}}` (422)** — every endpoint requires the `provider=` query parameter. It is not optional.
-- **`{detail: "Not Found"}`** — path format is `/api/v1/<area>/<sub>/<call>` (e.g. `/api/v1/equity/price/quote`), not the command-line form (`openbb equity price quote`). Use `/openapi.json` to discover exact paths.
+- **`{detail: "Not Found"}`** — path format is `/api/v1/` + `area/sub/action` (e.g. `/api/v1/equity/price/quote`), not the command-line form (`openbb equity price quote`). Use `/openapi.json` to discover exact paths.
 - **Provider `auth_error` / `insufficient_scope`** — the key for that provider isn't set, is wrong, or the free tier is exhausted. Add the correct `*_API_KEY` variable and redeploy.
 - **AGPL concerns** — see the note at the top.
 
