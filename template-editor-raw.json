@@ -4,7 +4,7 @@
   "OPENBB_API_AUTH": { "value": "false", "description": "Enable HTTP Basic auth on the endpoints (true/false). false = open access on a private project." },
   "OPENBB_API_USERNAME": { "value": "admin", "description": "Basic-auth username (only used when OPENBB_API_AUTH=true). Auto-filled so you can deploy one-click and change it later." },
   "OPENBB_API_PASSWORD": { "value": "${{secret(16)}}", "description": "Basic-auth password (only used when OPENBB_API_AUTH=true). Auto-generated on deploy; change it from the Variables tab." },
-  "FMP_API_KEY": { "value": "", "description": "Financial Modeling Prep (FMP) key — premium equity/ETF/FX. Replace placeholder before calling FMP; add or change later from the Variables tab." },
-  "INTRINIO_API_KEY": { "value": "", "description": "Intrinio key — fundamentals & market data. Replace placeholder before calling Intrinio; add or change later from the Variables tab." },
-  "FRED_API_KEY": { "value": "", "description": "FRED (St. Louis Fed, free) key — macro/economic series. Replace placeholder before calling FRED; add or change later from the Variables tab." }
+  "FMP_API_KEY": { "value": "", "description": "Financial Modeling Prep (FMP) key — premium equity/ETF/FX. Paste your key to enable FMP calls; leave empty to use keyless providers (yfinance) and add it later from the Variables tab. Get one: https://site.financialmodelingprep.com/developer/docs." },
+  "INTRINIO_API_KEY": { "value": "", "description": "Intrinio key — fundamentals & market data. Paste your key to enable Intrinio calls; leave empty and add it later from the Variables tab." },
+  "FRED_API_KEY": { "value": "", "description": "FRED (St. Louis Fed, free) key — macro/economic series (CPI, GDP series, rate curves). Paste your key to enable FRED calls; leave empty and add it later. Free tier: https://fred.stlouisfed.org/docs/api/api_key.html." }
 }
