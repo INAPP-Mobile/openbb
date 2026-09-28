@@ -3,7 +3,7 @@
 # Recipe based on the vendor's own build/docker/platformAPI.Dockerfile,
 # hardened for Railway: pinned base, build toolchain only at build time,
 # non-root runtime, HEALTHCHECK, EXPOSE.
-FROM python:3.10-slim-bookworm
+FROM python:3.14-slim-bookworm
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
